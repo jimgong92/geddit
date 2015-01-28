@@ -1,22 +1,17 @@
 package main
 
 import (
-  "io"
   "log"
-  "net/http"
-  "os"
+  "fmt"
+  "github.com/jimgong92/geddit/reddit"
 )
 
 func main() {
-  resp, err := http.Get("http://reddit.com/r/golang.json")
+  items, err := reddit.Get("all")
   if (err != nil) {
     log.Fatal(err)
   }
-  if (resp.StatusCode != http.StatusOK) {
-    log.Fatal(resp.Status)
-  }
-  _, err = io.Copy(os.Stdout, resp.Body)
-  if (err != nil) {
-    log.Fatal(err)
+  for _, item := range items {
+    fmt.Println(item)
   }
 }
